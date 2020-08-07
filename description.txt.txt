@@ -1,0 +1,49 @@
+Approach Outline:
+The task was to perform topic based sentiment detection to capture
+insights related to each review. 
+
+Major Challenge:
+The major challenge in this task is to determine multiple topics for each example.
+Since language models usually are one-to-one functions, applying them isnt a straightforward task apply them.
+
+Two types of approaches are experimented with
+
+1. Unsupervised method (LDA Clustering) :
+-> LDA clustering defines topic classification in the form of a probabilistic model.
+-> This approach uses the Tfidf Tokenizer to vectorize each review
+   and clusters them based on word frequency. 
+-> Each cluster signifies a topic and intersection between topics signifies overlap between examples
+-> The visualization of these are presented in an html format which also includes other information
+    regaring word frequencies for each topic
+
+The method is not very successful, even though it manages to model topics such as " value for money"
+
+There is a need to capture deeper context within each example
+
+
+Hence in this approach, I adopt a multi-label classification scheme and perform a binary classification
+for each of the topic
+
+Compiled from the dataset there are about 62 classes and is completely skewed towards some of them
+
+2. Supervised method (Multi-label Classification)
+To effectively capture context, the BERT pre-trained model is fine-tuned and is follwed by
+a dense layer for multi-label classification
+
+The metric used is a just mean squared error over all validation examples
+With the above approach, the model achieves a MSE of 0.49
+
+Future Work:
+Since the classes are skewed, it would not be prudent to apply the same threshold for all classes
+
+In such a case, dynamic thresholds will be more effective in classification and they can be implemented
+ based on the average probability of occurence of each topic in the train dataset
+
+Another school of thought is based on a temporal localization based approach derived from 
+action recognition. However, we will need the dataset to be labelled by localizing each topic to a set of words
+
+The approach is derived from the ActivityNet paper (ref: https://arxiv.org/pdf/1705.00754.pdf)
+
+
+
+
